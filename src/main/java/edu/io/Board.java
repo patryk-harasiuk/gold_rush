@@ -41,37 +41,13 @@ public class Board {
     }
 
     public void display() {
-
-    }
-
-    public static class Coords {
-        private final int col;
-        private final int row;
-
-        public Coords(int col, int row) {
-            this.col = col;
-            this.row = row;
-        }
-
-        public int col() {
-            return col;
-        }
-
-        public int row() {
-            return row;
-        }
-
-        @Override
-        public boolean equals(Object object) {
-            if (this == object) return true;
-            if (!(object instanceof Coords)) return false;
-            Coords coords = (Coords) object;
-            return this.col == coords.col && this.row == coords.row;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(col, row);
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                System.out.print(peekToken(row, col).label() + " ");
+            }
+            System.out.println();
         }
     }
+
+    public record Coords(int col, int row) {}
 }
