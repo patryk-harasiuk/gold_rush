@@ -1,9 +1,11 @@
 package edu.io.token;
 
 import edu.io.Board;
+import edu.io.Player;
 
 public class PlayerToken extends Token {
-    private Board board;
+    private final Player player;
+    private final Board board;
     private Board.Coords pos;
 
     public enum Move {
@@ -13,12 +15,14 @@ public class PlayerToken extends Token {
         DOWN, NONE
     }
 
-    public PlayerToken(Board board) {
+    public PlayerToken(Player player, Board board) {
         super();
+        this.player = player;
         this.board = board;
 
-        this.pos = new Board.Coords(0, 0);
+        this.pos = board.getAvailableSquare();
         board.placeToken(pos.col(), pos.row(), this);
+        player.assignToken(this);
     }
 
     public Board.Coords pos() {
@@ -37,10 +41,8 @@ public class PlayerToken extends Token {
             case NONE: return;
         }
 
-        boolean isOutOfBounds = (newCol < 0 || newCol >= board.size() || newRow < 0 || newRow >= board.size());
-
-        if (isOutOfBounds) {
-            throw new IllegalArgumentException("Moved out of bounds");
+        if (newCol < 0 || newCol >= board.size() || newRow < 0 || newRow >= board.size()) {
+            throw new IllegalArgumentException("Ruch poza planszę");
         }
 
         board.placeToken(pos.col(), pos.row(), new EmptyToken());

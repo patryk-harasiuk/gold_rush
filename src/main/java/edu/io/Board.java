@@ -50,4 +50,15 @@ public class Board {
     }
 
     public record Coords(int col, int row) {}
+
+    public Board.Coords getAvailableSquare() {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                if (peekToken(col, row) instanceof EmptyToken) {
+                    return new Board.Coords(col, row);
+                }
+            }
+        }
+        throw new IllegalStateException("Plansza jest pelna");
+    }
 }
