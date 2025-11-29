@@ -46,7 +46,7 @@ public class Board {
     public void display() {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                System.out.print(peekToken(row, col).label() + " ");
+                System.out.print(peekToken(col, row).label() + " ");
             }
             System.out.println();
         }
