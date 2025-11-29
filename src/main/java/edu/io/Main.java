@@ -11,9 +11,6 @@ public class Main {
         Player player = new Player();
         Scanner sc = new Scanner(System.in);
 
-
-;
-
         System.out.println("Wpisz: left, right, up, down, none lub exit.");
 
         game.join(player);
