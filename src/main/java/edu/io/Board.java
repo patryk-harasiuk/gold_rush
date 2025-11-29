@@ -7,6 +7,11 @@ import edu.io.token.Token;
 public class Board {
     public final int size = 10;
     private final Token[][] grid;
+    private PlacementStrategy placementStrategy = new SequentialPlacementStrategy();
+
+    public void setPlacementStrategy(PlacementStrategy strategy) {
+        this.placementStrategy = strategy;
+    }
 
     public Board() {
         this.grid = new Token[size][size];
@@ -55,14 +60,7 @@ public class Board {
     public record Coords(int col, int row) {}
 
     public Board.Coords getAvailableSquare() {
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
-                if (peekToken(col, row) instanceof EmptyToken) {
-                    return new Board.Coords(col, row);
-                }
-            }
-        }
-        throw new IllegalStateException("Plansza jest pelna");
+        return placementStrategy.getAvailableSquare(this);
     }
 
     public void spawnGoldTokens(int count) {
