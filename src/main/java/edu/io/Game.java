@@ -7,7 +7,7 @@ public class Game {
 
 
     public Game() {
-
+        board.spawnGoldTokens(5);
     }
 
     public void join(Player player) {

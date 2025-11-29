@@ -34,21 +34,29 @@ public class PlayerToken extends Token {
         int newRow = pos.row();
 
         switch (direction) {
-            case RIGHT: newCol ++; break;
-            case LEFT: newCol --; break;
-            case UP: newRow --; break;
-            case DOWN: newRow ++; break;
-            case NONE: return;
+            case RIGHT -> newCol ++;
+            case LEFT -> newCol --;
+            case UP -> newRow --;
+            case DOWN -> newRow ++;
+            case NONE -> {
+                return;
+            }
         }
 
         if (newCol < 0 || newCol >= board.size() || newRow < 0 || newRow >= board.size()) {
             throw new IllegalArgumentException("Ruch poza planszę");
         }
 
+        Token tokenOnNewPos = board.peekToken(newCol, newRow);
+
         board.placeToken(pos.col(), pos.row(), new EmptyToken());
         pos = new Board.Coords(newCol, newRow);
 
         board.placeToken(newCol, newRow, this);
+
+        if (!(tokenOnNewPos instanceof EmptyToken)) {
+            player.interactWithToken(tokenOnNewPos);
+        }
     }
 
     @Override

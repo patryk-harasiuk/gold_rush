@@ -1,17 +1,20 @@
 package edu.io;
 
 import edu.io.token.EmptyToken;
+import edu.io.token.GoldToken;
 import edu.io.token.Token;
 
-import java.util.Objects;
-
 public class Board {
-    public final int size = 5;
-    private Token[][] grid;
+    public final int size = 10;
+    private final Token[][] grid;
 
     public Board() {
-        grid = new Token[size][size];
-        clean();
+        this.grid = new Token[size][size];
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                grid[row][col] = new EmptyToken();
+            }
+        }
     }
 
     public int size() {
@@ -60,5 +63,12 @@ public class Board {
             }
         }
         throw new IllegalStateException("Plansza jest pelna");
+    }
+
+    public void spawnGoldTokens(int count) {
+        for (int goldIndex = 0; goldIndex < size; goldIndex++) {
+            Board.Coords pos = getAvailableSquare();
+            placeToken(pos.col(), pos.row(), new GoldToken());
+        }
     }
 }
