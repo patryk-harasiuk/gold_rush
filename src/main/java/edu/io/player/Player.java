@@ -5,10 +5,9 @@ import edu.io.token.*;
 public class Player {
         private PlayerToken token;
         public Gold gold = new Gold();
-        private final Shed shed = new Shed();
+        public final Shed shed = new Shed();
 
-    public Player() {
-    }
+    public Player() {}
 
     public void assignToken(PlayerToken token) {
         this.token = token;
@@ -24,17 +23,16 @@ public class Player {
               case PickaxeToken pickaxe -> {
                   shed.add(pickaxe);
               }
+              case SluiceboxToken sluicebox -> {
+                  shed.add(sluicebox);
+              }
               case AnvilToken anvilToken -> {
-                  Tool tool = shed.getTool();
-
-                  if (tool instanceof Repairable repairable) {
-                      repairable.repair();
+                  if (shed.getTool() instanceof Repairable tool) {
+                      tool.repair();
                   }
               }
                default -> {}
           }
-
-
     }
 
     private void usePickaxeOnGold(GoldToken goldToken) {
@@ -44,9 +42,13 @@ public class Player {
         tool.useWith(goldToken)
                 .ifWorking(() -> {
                     if (tool instanceof PickaxeToken pickaxe) {
-                        double gain = pickaxe.gainFactor();
-                        gold.gain(amount * gain);
+                        pickaxe.use();
+                        gold.gain(amount * pickaxe.gainFactor());
+                    }
 
+                    if (tool instanceof SluiceboxToken sluicebox) {
+                        sluicebox.use();
+                        gold.gain(amount * sluicebox.gainFactor());
                     }
                 })
                 .ifBroken(() -> {
