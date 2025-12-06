@@ -1,5 +1,6 @@
 package edu.io;
 
+import edu.io.player.Player;
 import edu.io.token.PlayerToken;
 
 import java.util.Scanner;
@@ -32,9 +33,7 @@ public class Game {
                 System.out.println("Koniec gry");
                 break;
             }
-
             processMove(input);
-
         }
     }
 
@@ -47,7 +46,7 @@ public class Game {
 
         try {
             player.token().move(parsedMove);
-            System.out.println("Zloto: " + player.gold());
+            System.out.println("Zloto: " + player.gold.amount());
         } catch (IllegalArgumentException e) {
             System.out.println("Nie mozesz poruszać się dalej w tym kierunku.");
         }

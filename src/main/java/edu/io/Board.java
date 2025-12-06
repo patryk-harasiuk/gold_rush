@@ -26,20 +26,20 @@ public class Board {
         return size;
     }
 
-    public Token square(int x, int y) {
-        return grid[x][y];
+    public Token square(int row, int col) {
+        return grid[row][col];
     }
 
-    public void placeToken(int x, int y, Token token) {
-        grid[x][y] = token;
+    public void placeToken(int row, int col, Token token) {
+        grid[row][col] = token;
     }
 
 
     public void clean() {
         Token emptyToken = new EmptyToken();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                grid[i][j] = emptyToken;
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                grid[row][col] = emptyToken;
             }
         }
     }
