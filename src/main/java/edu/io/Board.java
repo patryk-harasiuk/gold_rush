@@ -1,13 +1,14 @@
 package edu.io;
 
-import edu.io.token.EmptyToken;
-import edu.io.token.GoldToken;
-import edu.io.token.Token;
+import edu.io.token.*;
+
+import java.util.Random;
 
 public class Board {
     public final int size = 10;
     private final Token[][] grid;
     private PlacementStrategy placementStrategy = new SequentialPlacementStrategy();
+    private final Random random = new Random();
 
     public void setPlacementStrategy(PlacementStrategy strategy) {
         this.placementStrategy = strategy;
@@ -26,11 +27,7 @@ public class Board {
         return size;
     }
 
-    public Token square(int row, int col) {
-        return grid[row][col];
-    }
-
-    public void placeToken(int row, int col, Token token) {
+    public void placeToken(int col, int row, Token token) {
         grid[row][col] = token;
     }
 
@@ -44,8 +41,8 @@ public class Board {
         }
     }
 
-    public Token peekToken(int x, int y) {
-        return grid[x][y];
+    public Token peekToken(int col, int row) {
+        return grid[row][col];
     }
 
     public void display() {
@@ -63,10 +60,39 @@ public class Board {
         return placementStrategy.getAvailableSquare(this);
     }
 
-    public void spawnGoldTokens(int count) {
-        for (int goldIndex = 0; goldIndex < size; goldIndex++) {
+    public void spawnRandomGame(int goldCount, int pickaxeCount, int anvilCount, int sluiceboxCount) {
+        spawnGoldTokens(goldCount);
+        spawnPickaxeTokens(pickaxeCount);
+        spawnAnvilTokens(anvilCount);
+        spawnGoldTokens(goldCount);
+        spawnSluiceboxTokens(sluiceboxCount);
+    }
+
+    private void spawnGoldTokens(int count) {
+        for (int index = 0; index < count; index++) {
             Board.Coords pos = getAvailableSquare();
             placeToken(pos.col(), pos.row(), new GoldToken());
+        }
+    }
+
+    private void spawnPickaxeTokens(int count) {
+        for (int index = 0; index < count; index++) {
+            Board.Coords pos = getAvailableSquare();
+            placeToken(pos.col(), pos.row(), new PickaxeToken());
+        }
+    }
+
+    private void spawnAnvilTokens(int count) {
+        for (int index = 0; index < count; index++) {
+            Board.Coords pos = getAvailableSquare();
+            placeToken(pos.col(), pos.row(), new AnvilToken());
+        }
+    }
+
+    private void spawnSluiceboxTokens(int count) {
+        for (int index = 0; index < count; index++) {
+            Board.Coords pos = getAvailableSquare();
+            placeToken(pos.col(), pos.row(), new SluiceboxToken());
         }
     }
 }

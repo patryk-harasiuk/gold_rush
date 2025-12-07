@@ -9,6 +9,10 @@ public class Player {
 
     public Player() {}
 
+    public Shed shed() {
+        return shed;
+    }
+
     public void assignToken(PlayerToken token) {
         this.token = token;
     }
@@ -42,7 +46,6 @@ public class Player {
         tool.useWith(goldToken)
                 .ifWorking(() -> {
                     if (tool instanceof PickaxeToken pickaxe) {
-                        pickaxe.use();
                         gold.gain(amount * pickaxe.gainFactor());
                     }
 

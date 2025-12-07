@@ -50,13 +50,13 @@ public class  PlayerToken extends Token {
         Token tokenOnNewPos = board.peekToken(newCol, newRow);
 
         board.placeToken(pos.col(), pos.row(), new EmptyToken());
-        pos = new Board.Coords(newCol, newRow);
 
-        board.placeToken(newCol, newRow, this);
 
         if (!(tokenOnNewPos instanceof EmptyToken)) {
             player.interactWithToken(tokenOnNewPos);
         }
+        pos = new Board.Coords(newCol, newRow);
+        board.placeToken(newCol, newRow, this);
     }
 
     @Override

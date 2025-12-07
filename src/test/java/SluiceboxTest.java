@@ -1,5 +1,3 @@
-
-
 import edu.io.player.NoTool;
 import edu.io.player.Player;
 import edu.io.token.AnvilToken;
