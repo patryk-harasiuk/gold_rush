@@ -4,7 +4,7 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 public class Vitals {
-    private int hydration = 100;
+    private int hydration;
 
     private Runnable onDeathCallback = () -> {};
 
@@ -30,13 +30,16 @@ public class Vitals {
     }
 
     public void dehydrate(int amount) {
+
         if (amount <= 0) {
-            throw new IllegalArgumentException("Wartość nawodnienia nie moze byc ujemna");
+            throw new IllegalArgumentException("Wartość odwodnienia musi być dodatnia.");
         }
+
+        int oldHydration = this.hydration;
 
         this.hydration = Math.max(0, this.hydration - amount);
 
-        if (this.hydration == 0) {
+        if (oldHydration > 0 && this.hydration == 0) {
             onDeathCallback.run();
         }
     }

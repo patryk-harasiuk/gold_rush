@@ -50,8 +50,12 @@ public class Player {
                       tool.repair();
                   }
               }
-              case WaterToken water -> vitals.hydrate(water.amount());
-              default -> vitals.dehydrate(VitalsValues.DEHYDRATION_MOVE);
+              case WaterToken water -> {
+                  vitals.hydrate(water.amount());
+              }
+              default -> {
+                  vitals.dehydrate(VitalsValues.DEHYDRATION_MOVE);
+              }
           }
     }
 

@@ -17,7 +17,7 @@ public class Game {
     public Game() {
        RandomPlacementStrategy randomStrategy = new RandomPlacementStrategy();
        board.setPlacementStrategy(randomStrategy);
-       board.spawnRandomGame(8, 1, 1, 1);
+       board.spawnRandomGame(8, 1, 1, 1, 3);
     }
 
     public void join(Player player) {
@@ -69,6 +69,7 @@ public class Game {
         try {
             player.token().move(parsedMove);
             System.out.println("Zloto: " + player.gold.amount());
+            System.out.println("Nawodnienie: " + player.vitals.hydration());
         } catch (IllegalArgumentException error) {
             System.out.println("Nie mozesz poruszać się dalej w tym kierunku.");
         } catch (IllegalStateException error) {

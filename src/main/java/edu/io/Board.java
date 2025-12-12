@@ -63,12 +63,13 @@ public class Board {
         return placementStrategy.getAvailableSquare(this);
     }
 
-    public void spawnRandomGame(int goldCount, int pickaxeCount, int anvilCount, int sluiceboxCount) {
+    public void spawnRandomGame(int goldCount, int pickaxeCount, int anvilCount, int sluiceboxCount, int waterCount) {
         spawnGoldTokens(goldCount);
         spawnPickaxeTokens(pickaxeCount);
         spawnAnvilTokens(anvilCount);
         spawnGoldTokens(goldCount);
         spawnSluiceboxTokens(sluiceboxCount);
+        spawnWaterTokens(waterCount);
     }
 
     private void spawnGoldTokens(int count) {
@@ -96,6 +97,13 @@ public class Board {
         for (int index = 0; index < count; index++) {
             Board.Coords pos = getAvailableSquare();
             placeToken(pos.col(), pos.row(), new SluiceboxToken());
+        }
+    }
+
+    private void spawnWaterTokens(int count) {
+        for (int index = 0; index < count; index++) {
+            Board.Coords pos = getAvailableSquare();
+            placeToken(pos.col(), pos.row(), new WaterToken());
         }
     }
 }
