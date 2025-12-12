@@ -8,6 +8,7 @@ import edu.io.token.PlayerToken;
 import edu.io.token.SluiceboxToken;
 
 import java.util.Scanner;
+import java.util.Objects;
 
 public class Game {
     private final Board board = new Board();
@@ -20,6 +21,8 @@ public class Game {
     }
 
     public void join(Player player) {
+        Objects.requireNonNull(player, "Player cannot be null");
+
         this.player = player;
         new PlayerToken(player, board);
     }
@@ -66,8 +69,10 @@ public class Game {
         try {
             player.token().move(parsedMove);
             System.out.println("Zloto: " + player.gold.amount());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException error) {
             System.out.println("Nie mozesz poruszać się dalej w tym kierunku.");
+        } catch (IllegalStateException error) {
+            System.err.println("Chwilowo nie zyjesz. Nie mozesz wykonac ruchu.");
         }
 
     }

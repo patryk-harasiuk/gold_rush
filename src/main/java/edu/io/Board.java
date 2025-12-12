@@ -2,6 +2,7 @@ package edu.io;
 
 import edu.io.token.*;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class Board {
@@ -28,6 +29,8 @@ public class Board {
     }
 
     public void placeToken(int col, int row, Token token) {
+        Objects.requireNonNull(token, "Token cannot be null");
+
         grid[row][col] = token;
     }
 

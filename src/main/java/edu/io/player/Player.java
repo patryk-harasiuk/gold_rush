@@ -2,19 +2,24 @@ package edu.io.player;
 
 import edu.io.token.*;
 
+import java.util.Objects;
+
 public class Player {
         private PlayerToken token;
         public Gold gold = new Gold();
         public final Shed shed = new Shed();
+        public final Vitals vitals = new Vitals();
 
-    public Player() {}
+    public Player() {
+        vitals.setOnDeathHandler(() -> System.out.println("Odwodnienie!"));
+    }
 
     public Shed shed() {
         return shed;
     }
 
     public void assignToken(PlayerToken token) {
-        this.token = token;
+        this.token = Objects.requireNonNull(token, "Token cannot be null");
     }
 
     public PlayerToken token() {
@@ -22,8 +27,17 @@ public class Player {
     }
 
     public void interactWithToken(Token token) {
+            Objects.requireNonNull(token, "Token cannot be null");
+
+            if (!vitals.isAlive()) {
+                throw new IllegalStateException("Gracz nie żyje");
+            }
+
           switch (token) {
-              case GoldToken goldToken -> usePickaxeOnGold(goldToken);
+              case GoldToken goldToken -> {
+                  vitals.dehydrate(VitalsValues.DEHYDRATION_GOLD);
+                  usePickaxeOnGold(goldToken);
+              }
               case PickaxeToken pickaxe -> {
                   shed.add(pickaxe);
               }
@@ -31,11 +45,13 @@ public class Player {
                   shed.add(sluicebox);
               }
               case AnvilToken anvilToken -> {
+                  vitals.dehydrate(VitalsValues.DEHYDRATION_ANVIL);
                   if (shed.getTool() instanceof Repairable tool) {
                       tool.repair();
                   }
               }
-               default -> {}
+              case WaterToken water -> vitals.hydrate(water.amount());
+              default -> vitals.dehydrate(VitalsValues.DEHYDRATION_MOVE);
           }
     }
 
