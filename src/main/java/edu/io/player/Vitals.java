@@ -22,10 +22,18 @@ public class Vitals {
     }
 
     public void hydrate(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Wartość nawodnienia nie moze byc ujemna");
+        }
+
         this.hydration = Math.min(100, hydration + amount);
     }
 
     public void dehydrate(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Wartość nawodnienia nie moze byc ujemna");
+        }
+
         this.hydration = Math.max(0, this.hydration - amount);
 
         if (this.hydration == 0) {
